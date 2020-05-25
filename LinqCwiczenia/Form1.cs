@@ -418,6 +418,29 @@ namespace LinqCwiczenia
 
             ResultsDataGridView.DataSource = result.ToList();
         }
+        
+        //Znajdź pracownika z najwyższą pensją wykorzystując metodę Aggregate()
+        public void Przyklad11()
+        {
+            var result = Emps.Aggregate(0, (maxP, next) =>
+                         (next.Salary >= maxP ? maxP = next.Salary : maxP));
+        }
+
+        //Z pomocą języka LINQ i metody SelectMany wykonaj złączenie
+        //typu CROSS JOIN
+        public void Przyklad12()
+        {
+            var result = Emps.SelectMany(e => Depts, (e, d) => new
+            {
+                emp = e,
+                dept = d
+            });
+
+            foreach (var r in result)
+            {
+                Debug.WriteLine(r.dept + " - " + r.emp);
+            }
+        }
 
     }
 }
